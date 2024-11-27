@@ -1,7 +1,10 @@
 package services;
 
+import models.Bibliotecario;
+
 public class BibliotecarioService {
     static CadastroLivroService servico = new CadastroLivroService();
+    static Bibliotecario bibliotecario = new Bibliotecario();
 
     public static void receberOpcao(int opcao){
 
@@ -12,9 +15,11 @@ public class BibliotecarioService {
                 break;
             case 2:
                 System.out.println("Cadastrando...");
+                servico.adicionar();
                 break;
             case 3:
                 System.out.println("Removendo...");
+                bibliotecario.remover();
                 break;
             case 0:
                 System.out.println("Volta...");

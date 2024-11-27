@@ -24,13 +24,13 @@ public class Livro extends ItemBiblioteca implements IRegistravel {
     @Override
     public void registrarEntrada() {
         flag = true;
-        System.out.println("Este livro chamado "+ getTitulo() + " está disponível!" );
+        System.out.println("O livro "+ getTitulo() + " está disponível!" );
     }
 
     @Override
     public void registrarSaida() {
         flag = false;
-        System.out.println("Este livro chamado "+ getTitulo() + " NÃO está disponível!" );
+        System.out.println("O livro "+ getTitulo() + " NÃO está disponível!" );
     }
 
     @Override

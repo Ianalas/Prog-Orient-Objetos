@@ -1,8 +1,8 @@
 package utils;
 
 import classAbstract.Pessoa;
+import jdk.swing.interop.SwingInterOpUtils;
 import models.Livro;
-import models.Usuario;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,6 +11,31 @@ import java.util.List;
 public class FileUtils {
     private static final String FILE_PATH = "./src/database/cadastros.csv";
     private static final String FILE_PATH_BOOK = "./src/database/livros.csv";
+    static List<Livro> livros = new ArrayList<>();
+
+    static {
+        livros.addAll(lerArquivos());
+    }
+
+    public static void setStatusBook(String titulo, short ano){
+
+        for(Livro livro: livros){
+            if(livro.getAno() == ano && livro.getTitulo().equalsIgnoreCase(titulo)){
+                livro.setFlag(true);
+                salvarListaAtualizada(livros);
+            }
+        }
+    }
+
+    public static void setStatusBook(String titulo, short ano, boolean status){
+
+        for(Livro livro: livros){
+            if(livro.getAno() == ano && livro.getTitulo().equalsIgnoreCase(titulo)){
+                livro.setFlag(status);
+                salvarListaAtualizada(livros);
+            }
+        }
+    }
 
     public static void salvarNoArquivo(Pessoa pessoa) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
@@ -28,20 +53,62 @@ public class FileUtils {
 
             writer.write(livro.toCSV());
             writer.newLine();
+            livros.add(livro);
 
         } catch (IOException e) {
             System.out.println("Erro ao salvar no arquivo: " + e.getMessage());
         }
     }
 
+    public static void removerLivroPorTitulo(String titulo) {
+
+        if (livros.isEmpty()) {
+            System.out.println("Lista de livros está vazia. Certifique-se de carregar os arquivos primeiro.");
+            return;
+        }
+
+        int index = -1;
+        for (int i = 0; i < livros.size(); i++) {
+            if (livros.get(i).getTitulo().equalsIgnoreCase(titulo)) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index == -1) {
+            System.out.println("Livro com título \"" + titulo + "\" não encontrado.");
+            return;
+        }
+
+        Livro livroRemovido = livros.remove(index);
+        System.out.println("Livro \"" + livroRemovido.getTitulo() + "\" removido da lista.");
+        salvarListaAtualizada(livros);
+        System.out.println("Arquivo atualizado!");
+    }
+
+    private static void salvarListaAtualizada(List<Livro> livrosAtualizados) {
+
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH_BOOK, false))) {
+
+            for (Livro livro : livrosAtualizados) {
+                writer.write(livro.toCSV());
+                writer.newLine();
+            }
+
+        } catch (IOException e) {
+            System.out.println("Erro ao atualizar o arquivo: " + e.getMessage());
+        }
+    }
+
     public static List<Livro> lerArquivos() {
-        List<Livro> livros = new ArrayList<>();
+        livros.clear();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH_BOOK))) {
             String linha;
 
             while ((linha = reader.readLine()) != null) {
-                String[] partes = linha.split(",\\s*");
+                String[] partes = linha.split(",");
 
                 if (partes.length == 4) {
                     String titulo = partes[0];
@@ -50,10 +117,10 @@ public class FileUtils {
                     boolean disponibilidade = Boolean.parseBoolean(partes[3]);
 
                     Livro livro = new Livro(titulo, autor, ano, disponibilidade);
-
                     livros.add(livro);
                 }
             }
+            System.out.println(livros);
         } catch (IOException e) {
             System.out.println("Erro ao ler o arquivo: " + e.getMessage());
         } catch (NumberFormatException e) {

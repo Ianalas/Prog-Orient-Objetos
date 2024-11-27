@@ -1,8 +1,13 @@
 package models;
 
 import classAbstract.Pessoa;
+import interfaces.IGerenciavel;
+import utils.FileUtils;
 
-public class Bibliotecario extends Pessoa {
+import java.util.Scanner;
+
+public class Bibliotecario extends Pessoa implements IGerenciavel {
+    Scanner prompt = new Scanner(System.in);
 
     private String turno;
 
@@ -27,5 +32,22 @@ public class Bibliotecario extends Pessoa {
     @Override
     public String toCSV() {
         return super.toCSV() + "," + turno; // ou adicione outros atributos
+    }
+
+    @Override
+    public void adicionar() {
+
+    }
+
+    @Override
+    public void remover() {
+        System.out.println("Titulo do livro que deseja remover");
+        String titulo = prompt.nextLine();
+        FileUtils.removerLivroPorTitulo(titulo);
+    }
+
+    @Override
+    public void listar() {
+
     }
 }

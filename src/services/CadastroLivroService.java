@@ -10,13 +10,23 @@ import java.util.Scanner;
 
 public class CadastroLivroService implements IGerenciavel {
     Scanner scanner = new Scanner(System.in);
+
+    public static void alugarLivro(String titulo, short ano){
+        FileUtils.setStatusBook(titulo,ano);
+    }
+
+    public static void devolverLivro(String titulo, short ano){
+        FileUtils.setStatusBook(titulo,ano, false);
+    }
+
+
     @Override
     public void adicionar() {
         System.out.println("===Cadastro de Livros===\n");
-        System.out.println("Nome do Livro\n");
+        System.out.println("Nome do Livro");
         String titulo = scanner.nextLine();
 
-        System.out.println("Nome do Autor\n");
+        System.out.println("Nome do Autor");
         String autor = scanner.nextLine();
 
         System.out.println("Ano de Edição do Livro");
@@ -45,6 +55,7 @@ public class CadastroLivroService implements IGerenciavel {
     @Override
     public void listar() {
         List<Livro> livros = FileUtils.lerArquivos();
+        System.out.println("CadLivroServ"+livros);
 
         if (livros.isEmpty()) {
             System.out.println("Nenhum livro encontrado.");
@@ -55,7 +66,7 @@ public class CadastroLivroService implements IGerenciavel {
             System.out.println("Título: " + livro.getTitulo());
             System.out.println("Autor: " + livro.getAutor());
             System.out.println("Ano da edição: " + livro.getAno());
-            System.out.println("Disponível: " + (livro.isFlag() ? "Sim" : "Não"));
+            System.out.println("Disponível: " + (!livro.isFlag() ? "Sim" : "Não"));
             System.out.println("-----------------------------");
         }
     }

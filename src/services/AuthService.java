@@ -29,14 +29,22 @@ public class AuthService {
                         System.out.println("Login bem-sucedido! Bem-vindo, " + nome + "!");
 
                         if (dados.length == 5 ) {
-                            MenuUtils.exibirMenuBibliotecario();
-                            int opcao = MenuUtils.lerOpcao(scanner);
-                            BibliotecarioService.receberOpcao(opcao);
+                            int opcao;
+
+                            do {
+                                MenuUtils.exibirMenuBibliotecario();
+                                opcao = MenuUtils.lerOpcao(scanner);
+                                BibliotecarioService.receberOpcao(opcao);
+                            }while ( opcao==1 );
 
                         } else {
-                            MenuUtils.exibirMenuUsuario();
-                            int opcao = MenuUtils.lerOpcao(scanner);
-                            UserService.receberOpcao(opcao);
+                            int opcao;
+
+                            do {
+                                MenuUtils.exibirMenuUsuario();
+                                opcao = MenuUtils.lerOpcao(scanner);
+                                UserService.receberOpcao(opcao);
+                            }while (opcao == 1);
                         }
 
                         return true;
