@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 public class AuthService {
     private static final String FILE_PATH = "./src/database/cadastros.csv";
-    Scanner scanner = new Scanner(System.in);
 
     public static boolean logar(Scanner scanner) {
         System.out.print("\nDigite seu nome para logar: ");
@@ -32,10 +31,12 @@ public class AuthService {
                         if (dados.length == 5 ) {
                             MenuUtils.exibirMenuBibliotecario();
                             int opcao = MenuUtils.lerOpcao(scanner);
-                            UserService.receberOpcao(opcao);
+                            BibliotecarioService.receberOpcao(opcao);
+
                         } else {
                             MenuUtils.exibirMenuUsuario();
-                            MenuUtils.lerOpcao(scanner);
+                            int opcao = MenuUtils.lerOpcao(scanner);
+                            UserService.receberOpcao(opcao);
                         }
 
                         return true;

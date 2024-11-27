@@ -4,9 +4,17 @@ import classAbstract.ItemBiblioteca;
 import interfaces.IRegistravel;
 
 public class Livro extends ItemBiblioteca implements IRegistravel {
-    boolean flag = true;
+    private boolean flag;
 
-    public Livro( String titulo, String autor, short ano, boolean flag) {
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
+
+    public Livro(String titulo, String autor, short ano, boolean flag) {
         setTitulo(titulo);
         setAutor(autor);
         setAno(ano);

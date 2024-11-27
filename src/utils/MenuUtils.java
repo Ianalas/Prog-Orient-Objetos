@@ -33,9 +33,9 @@ public class MenuUtils {
 
         System.out.printf(
             "\n========== MENU ==========\n" +
-                "1. Cadastrar Livro\n" +
-                "2. Remover Livro\n" +
-                "3. Listar Livros\n" +
+                "1. Listar Livros\n" +
+                "2. Cadastrar Livros\n" +
+                "3. Remover Livros\n" +
                 "0. Sair\n" +
                 "==========================\n" +
                 "Escolha uma opção: "

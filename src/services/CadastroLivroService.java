@@ -4,6 +4,7 @@ import interfaces.IGerenciavel;
 import models.Livro;
 import utils.FileUtils;
 
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -43,6 +44,19 @@ public class CadastroLivroService implements IGerenciavel {
 
     @Override
     public void listar() {
+        List<Livro> livros = FileUtils.lerArquivos();
 
+        if (livros.isEmpty()) {
+            System.out.println("Nenhum livro encontrado.");
+            return;
+        }
+
+        for (Livro livro : livros) {
+            System.out.println("Título: " + livro.getTitulo());
+            System.out.println("Autor: " + livro.getAutor());
+            System.out.println("Ano da edição: " + livro.getAno());
+            System.out.println("Disponível: " + (livro.isFlag() ? "Sim" : "Não"));
+            System.out.println("-----------------------------");
+        }
     }
 }
