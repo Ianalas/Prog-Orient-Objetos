@@ -6,6 +6,8 @@ import utils.MenuUtils;
 
 import java.util.Scanner;
 
+import static utils.FileUtils.lerArquivos;
+
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -13,16 +15,15 @@ public class Main {
         int opcao;
         FileUtils.criarDiretorio();
 
+        System.out.println(lerArquivos());
+
         do {
             MenuUtils.exibirMenuPrincipal();
             opcao = MenuUtils.lerOpcao(scanner);
 
             switch (opcao) {
                 case 1:
-                    boolean resp = AuthService.logar(scanner);
-                    if(resp){
-
-                    }
+                    AuthService.logar(scanner);
                     break;
                 case 2:
                     CadastroService.cadastrar(scanner);

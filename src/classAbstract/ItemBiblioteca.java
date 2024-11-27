@@ -1,7 +1,6 @@
 package classAbstract;
 
 public abstract class ItemBiblioteca {
-    private int id;
     private String titulo;
     private String autor;
     private short ano;
@@ -32,14 +31,10 @@ public abstract class ItemBiblioteca {
 
     @Override
     public String toString() {
-        return "ItemBiblioteca{" +
-                "titulo='" + titulo + '\'' +
-                ", autor='" + autor + '\'' +
-                ", ano=" + ano +
-                '}';
+        return "{ "+ titulo + ", " + autor + ", "+ ano;
     }
 
     public String toCSV() {
-        return id + "," + titulo + "," + autor + ","+ ano;
+        return titulo + "," + autor + ","+ ano;
     }
 }

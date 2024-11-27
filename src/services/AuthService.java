@@ -1,17 +1,16 @@
 package services;
 
-import classAbstract.Pessoa;
-import utils.FileUtils;
+import utils.MenuUtils;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
+
 public class AuthService {
     private static final String FILE_PATH = "./src/database/cadastros.csv";
-    private static final String FILE_PATH_BOOK = "./src/database/livros.csv";
+    Scanner scanner = new Scanner(System.in);
 
     public static boolean logar(Scanner scanner) {
         System.out.print("\nDigite seu nome para logar: ");
@@ -29,6 +28,16 @@ public class AuthService {
 
                     if (dados[3].equals(senha)) {
                         System.out.println("Login bem-sucedido! Bem-vindo, " + nome + "!");
+
+                        if (dados.length == 5 ) {
+                            MenuUtils.exibirMenuBibliotecario();
+                            int opcao = MenuUtils.lerOpcao(scanner);
+                            UserService.receberOpcao(opcao);
+                        } else {
+                            MenuUtils.exibirMenuUsuario();
+                            MenuUtils.lerOpcao(scanner);
+                        }
+
                         return true;
                     } else {
                         System.out.println("Senha incorreta. Tente novamente.");

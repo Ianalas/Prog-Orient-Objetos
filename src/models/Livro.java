@@ -27,10 +27,7 @@ public class Livro extends ItemBiblioteca implements IRegistravel {
 
     @Override
     public String toString() {
-        return "Livro{ " +
-                super.toString() +
-                " flag= " + flag +
-                '}';
+        return super.toString() + ", " + flag + " }";
     }
 
     @Override

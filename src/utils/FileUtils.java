@@ -2,11 +2,11 @@ package utils;
 
 import classAbstract.Pessoa;
 import models.Livro;
+import models.Usuario;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileUtils {
     private static final String FILE_PATH = "./src/database/cadastros.csv";
@@ -32,6 +32,35 @@ public class FileUtils {
         } catch (IOException e) {
             System.out.println("Erro ao salvar no arquivo: " + e.getMessage());
         }
+    }
+
+    public static List<Livro> lerArquivos() {
+        List<Livro> livros = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH_BOOK))) {
+            String linha;
+
+            while ((linha = reader.readLine()) != null) {
+                String[] partes = linha.split(",\\s*");
+
+                if (partes.length == 4) {
+                    String titulo = partes[0];
+                    String autor = partes[1];
+                    short ano = Short.parseShort(partes[2]);
+                    boolean disponibilidade = Boolean.parseBoolean(partes[3]);
+
+                    Livro livro = new Livro(titulo, autor, ano, disponibilidade);
+
+                    livros.add(livro);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Erro ao converter o ano ou disponibilidade: " + e.getMessage());
+        }
+
+        return livros;
     }
 
     public static void criarDiretorio() {
