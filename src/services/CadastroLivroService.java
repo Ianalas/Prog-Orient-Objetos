@@ -11,11 +11,13 @@ import java.util.Scanner;
 public class CadastroLivroService implements IGerenciavel {
     Scanner scanner = new Scanner(System.in);
 
-    public static void alugarLivro(String titulo, short ano){
+    public static void alugarLivro(String titulo, short ano) /*throws Excpetion Se tiver true*/ {
+
         FileUtils.setStatusBook(titulo,ano);
     }
 
     public static void devolverLivro(String titulo, short ano){
+
         FileUtils.setStatusBook(titulo,ano, false);
     }
 
@@ -47,15 +49,12 @@ public class CadastroLivroService implements IGerenciavel {
         short ano = scanner.nextShort();
         scanner.nextLine();
 
-
-
         System.out.println("Livro adicionado com sucesso.");
     }
 
     @Override
     public void listar() {
         List<Livro> livros = FileUtils.lerArquivos();
-        System.out.println("CadLivroServ"+livros);
 
         if (livros.isEmpty()) {
             System.out.println("Nenhum livro encontrado.");

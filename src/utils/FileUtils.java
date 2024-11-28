@@ -1,12 +1,15 @@
 package utils;
 
 import classAbstract.Pessoa;
-import jdk.swing.interop.SwingInterOpUtils;
 import models.Livro;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class FileUtils {
     private static final String FILE_PATH = "./src/database/cadastros.csv";
@@ -26,7 +29,6 @@ public class FileUtils {
             }
         }
     }
-
     public static void setStatusBook(String titulo, short ano, boolean status){
 
         for(Livro livro: livros){
@@ -67,23 +69,23 @@ public class FileUtils {
             return;
         }
 
-        int index = -1;
-        for (int i = 0; i < livros.size(); i++) {
-            if (livros.get(i).getTitulo().equalsIgnoreCase(titulo)) {
-                index = i;
-                break;
+        Map<String, Livro> mapLivros = livros.stream()
+                .collect(Collectors.toMap(Livro::getTitulo, Function.identity()));
+
+        Livro livroBook = mapLivros.get(titulo);
+
+        if (livroBook != null) {
+            boolean removed = livros.remove(livroBook);
+            if (removed) {
+                System.out.println("Livro \"" + livroBook.getTitulo() + "\" removido da lista.");
+                salvarListaAtualizada(livros);
+                System.out.println("Arquivo atualizado!");
+            } else {
+                System.out.println("Erro ao remover o livro da lista.");
             }
-        }
-
-        if (index == -1) {
+        } else {
             System.out.println("Livro com título \"" + titulo + "\" não encontrado.");
-            return;
         }
-
-        Livro livroRemovido = livros.remove(index);
-        System.out.println("Livro \"" + livroRemovido.getTitulo() + "\" removido da lista.");
-        salvarListaAtualizada(livros);
-        System.out.println("Arquivo atualizado!");
     }
 
     private static void salvarListaAtualizada(List<Livro> livrosAtualizados) {

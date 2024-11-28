@@ -14,7 +14,6 @@ public class Main {
         int opcao;
         FileUtils.criarDiretorio();
 
-
         do {
             MenuUtils.exibirMenuPrincipal();
             opcao = MenuUtils.lerOpcao(scanner);
