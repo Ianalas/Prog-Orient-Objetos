@@ -1,6 +1,7 @@
 package models;
 
 import classAbstract.Pessoa;
+import exceptions.LivroAlugadoException;
 import services.CadastroLivroService;
 
 import java.util.Scanner;
@@ -8,7 +9,7 @@ import java.util.Scanner;
 public class Usuario extends Pessoa {
     static Scanner prompt = new Scanner(System.in);
 
-    public static void pedirLivro(){
+    public static void pedirLivro() throws LivroAlugadoException {
         System.out.println("Escreva o título do livro");
         String titulo = prompt.nextLine();
 
@@ -19,7 +20,7 @@ public class Usuario extends Pessoa {
         CadastroLivroService.alugarLivro(titulo, anoEdit);
 
     }
-    public static void devolverLivro(){
+    public static void devolverLivro() throws LivroAlugadoException {
         System.out.println("Escreva o título do livro");
         String titulo = prompt.nextLine();
 

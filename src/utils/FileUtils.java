@@ -1,5 +1,6 @@
 package utils;
 
+import exceptions.LivroAlugadoException;
 import exceptions.LivroNaoEncontradoException;
 import classAbstract.Pessoa;
 import classAbstract.Utils;
@@ -21,19 +22,25 @@ public class FileUtils extends Utils {
         livros.addAll(lerArquivos());
     }
 
-    public static void setStatusBook(String titulo, short ano){
+    public static void setStatusBook(String titulo, short ano) throws LivroAlugadoException{
 
         for(Livro livro: livros){
             if(livro.getAno() == ano && livro.getTitulo().equalsIgnoreCase(titulo)){
+                if(!livro.isFlag()){
+                    throw new LivroAlugadoException("Este livro já está alugado.");
+                }
                 livro.setFlag(true);
                 salvarListaAtualizada(livros);
             }
         }
     }
-    public static void setStatusBook(String titulo, short ano, boolean status){
+    public static void setStatusBook(String titulo, short ano, boolean status) throws LivroAlugadoException {
 
         for(Livro livro: livros){
             if(livro.getAno() == ano && livro.getTitulo().equalsIgnoreCase(titulo)){
+                if(!livro.isFlag()){
+                    throw new LivroAlugadoException("Este livro Não estava alugado.");
+                }
                 livro.setFlag(status);
                 salvarListaAtualizada(livros);
             }
@@ -85,7 +92,6 @@ public class FileUtils extends Utils {
 
     private static void salvarListaAtualizada(List<Livro> livrosAtualizados) {
 
-
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH_BOOK, false))) {
 
             for (Livro livro : livrosAtualizados) {
@@ -97,6 +103,20 @@ public class FileUtils extends Utils {
             System.out.println("Erro ao atualizar o arquivo: " + e.getMessage());
         }
     }
+
+    private static void salvarListaAtualizada(Map<String, Livro> livrosAtualizados) {
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH_BOOK, false))) {
+            for (Livro livro : livrosAtualizados.values()) {
+                writer.write(livro.toCSV());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao atualizar o arquivo: " + e.getMessage());
+        }
+    }
+
+
 
     public static List<Livro> lerArquivos() {
         livros.clear();

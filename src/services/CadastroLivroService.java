@@ -1,5 +1,6 @@
 package services;
 
+import exceptions.LivroAlugadoException;
 import interfaces.IGerenciavel;
 import interfaces.IServices;
 import models.Livro;
@@ -12,12 +13,12 @@ import java.util.Scanner;
 public class CadastroLivroService implements IGerenciavel, IServices {
     Scanner scanner = new Scanner(System.in);
 
-    public static void alugarLivro(String titulo, short ano) /*throws Excpetion Se tiver true*/ {
+    public static void alugarLivro(String titulo, short ano) throws LivroAlugadoException {
 
         FileUtils.setStatusBook(titulo,ano);
     }
 
-    public static void devolverLivro(String titulo, short ano){
+    public static void devolverLivro(String titulo, short ano) throws LivroAlugadoException {
 
         FileUtils.setStatusBook(titulo,ano, false);
     }

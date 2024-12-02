@@ -1,3 +1,4 @@
+import exceptions.UsuarioException;
 import services.AuthService;
 
 import services.CadastroService;
@@ -10,7 +11,7 @@ import java.util.Scanner;
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UsuarioException {
         int opcao;
         FileUtils.criarDiretorio();
 
