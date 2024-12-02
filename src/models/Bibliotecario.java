@@ -1,6 +1,7 @@
 package models;
 
 import classAbstract.Pessoa;
+import exceptions.LivroNaoEncontradoException;
 import interfaces.IGerenciavel;
 import utils.FileUtils;
 
@@ -40,7 +41,7 @@ public class Bibliotecario extends Pessoa implements IGerenciavel {
     }
 
     @Override
-    public void remover() {
+    public void remover() throws LivroNaoEncontradoException {
         System.out.println("Titulo do livro que deseja remover");
         String titulo = prompt.nextLine();
         FileUtils.removerLivroPorTitulo(titulo);

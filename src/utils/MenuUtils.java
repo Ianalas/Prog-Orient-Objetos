@@ -1,8 +1,10 @@
 package utils;
+import classAbstract.Utils;
+
 import java.util.Scanner;
 
 
-public class MenuUtils {
+public class MenuUtils extends Utils {
 
     public static void exibirMenuPrincipal(){
 

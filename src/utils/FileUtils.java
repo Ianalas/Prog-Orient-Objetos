@@ -1,17 +1,18 @@
 package utils;
 
+import exceptions.LivroNaoEncontradoException;
 import classAbstract.Pessoa;
+import classAbstract.Utils;
 import models.Livro;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class FileUtils {
+public class FileUtils extends Utils {
     private static final String FILE_PATH = "./src/database/cadastros.csv";
     private static final String FILE_PATH_BOOK = "./src/database/livros.csv";
     static List<Livro> livros = new ArrayList<>();
@@ -62,11 +63,10 @@ public class FileUtils {
         }
     }
 
-    public static void removerLivroPorTitulo(String titulo) {
+    public static void removerLivroPorTitulo(String titulo) throws LivroNaoEncontradoException {
 
         if (livros.isEmpty()) {
-            System.out.println("Lista de livros está vazia. Certifique-se de carregar os arquivos primeiro.");
-            return;
+            throw new LivroNaoEncontradoException("A lista de livros está vazia. Certifique-se de carregar os arquivos primeiro.");
         }
 
         Map<String, Livro> mapLivros = livros.stream()
@@ -75,16 +75,11 @@ public class FileUtils {
         Livro livroBook = mapLivros.get(titulo);
 
         if (livroBook != null) {
-            boolean removed = livros.remove(livroBook);
-            if (removed) {
-                System.out.println("Livro \"" + livroBook.getTitulo() + "\" removido da lista.");
-                salvarListaAtualizada(livros);
-                System.out.println("Arquivo atualizado!");
-            } else {
-                System.out.println("Erro ao remover o livro da lista.");
-            }
+            livros.remove(livroBook);
+            salvarListaAtualizada(livros);
+            System.out.println("Livro \"" + livroBook.getTitulo() + "\" removido da lista e arquivo atualizado.");
         } else {
-            System.out.println("Livro com título \"" + titulo + "\" não encontrado.");
+            throw new LivroNaoEncontradoException("Livro com título \"" + titulo + "\" não encontrado.");
         }
     }
 

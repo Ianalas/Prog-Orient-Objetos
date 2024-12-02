@@ -1,5 +1,7 @@
 package services;
 
+import exceptions.LivroNaoEncontradoException;
+import interfaces.IServices;
 import utils.MenuUtils;
 
 import java.io.BufferedReader;
@@ -8,7 +10,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 
-public class AuthService {
+public class AuthService implements IServices {
     private static final String FILE_PATH = "./src/database/cadastros.csv";
 
     public static boolean logar(Scanner scanner) {
@@ -35,7 +37,7 @@ public class AuthService {
                                 MenuUtils.exibirMenuBibliotecario();
                                 opcao = MenuUtils.lerOpcao(scanner);
                                 BibliotecarioService.receberOpcao(opcao);
-                            }while ( opcao==1 );
+                            }while ( opcao == 1 );
 
                         } else {
                             int opcao;
@@ -55,11 +57,13 @@ public class AuthService {
                 }
             }
             System.out.println("Nome não encontrado. Por favor, cadastre-se antes de tentar logar.");
+
         } catch (IOException e) {
             System.out.println("Erro ao acessar o arquivo: " + e.getMessage());
-        }
 
+        } catch (LivroNaoEncontradoException e) {
+            throw new RuntimeException(e);
+        }
         return false;
     }
-
 }

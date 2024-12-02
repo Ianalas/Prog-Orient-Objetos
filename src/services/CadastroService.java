@@ -1,6 +1,8 @@
 package services;
 
+import exceptions.UsuarioException;
 import classAbstract.Pessoa;
+import interfaces.IServices;
 import models.Bibliotecario;
 import models.Usuario;
 import utils.FileUtils;
@@ -8,10 +10,10 @@ import utils.FileUtils;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CadastroService {
+public class CadastroService implements IServices {
     private static final ArrayList<Pessoa> pessoas = new ArrayList<>();
 
-    public static void cadastrar(Scanner scanner) {
+    public static void cadastrar(Scanner scanner) throws UsuarioException {
         System.out.printf(
                 "\n========== MENU ==========\n" +
                         "1. Você é um usuário\n" +
@@ -32,28 +34,32 @@ public class CadastroService {
         }
     }
 
-    private static void cadastrarUsuario(Scanner scanner) {
-        System.out.println("===== Cadastro de Usuário =====");
-        Usuario user = new Usuario();
+    private static void cadastrarUsuario(Scanner scanner) throws UsuarioException {
+        try {
+            System.out.println("===== Cadastro de Usuário =====");
+            Usuario user = new Usuario();
 
-        System.out.print("Nome para cadastro: ");
-        user.setNome(scanner.nextLine());
+            System.out.print("Nome para cadastro: ");
+            user.setNome(scanner.nextLine());
 
-        System.out.print("Email de uso: ");
-        user.setEmail(scanner.nextLine());
+            System.out.print("Email de uso: ");
+            user.setEmail(scanner.nextLine());
 
-        String senha;
-        do {
-            System.out.print("Escolha uma senha com no mínimo 6 dígitos: ");
-            senha = scanner.nextLine();
-        } while (senha.length() < 6);
+            String senha;
+            do {
+                System.out.print("Escolha uma senha com no mínimo 6 dígitos: ");
+                senha = scanner.nextLine();
+            } while (senha.length() < 6);
 
-        user.setSenha(senha);
-        user.setId(pessoas.size());
+            user.setSenha(senha);
+            user.setId(pessoas.size());
 
-        pessoas.add(user);
-        FileUtils.salvarNoArquivo(user);
-        System.out.println("Cadastro de usuário realizado.");
+            pessoas.add(user);
+            FileUtils.salvarNoArquivo(user);
+            System.out.println("Cadastro de usuário realizado.");
+        } catch (Exception e) {
+            throw new UsuarioException("Erro no cadastro do usuário: " + e.getMessage());
+        }
     }
 
     private static void cadastrarBibliotecario(Scanner scanner) {

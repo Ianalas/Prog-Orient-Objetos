@@ -1,6 +1,7 @@
 package services;
 
 import interfaces.IGerenciavel;
+import interfaces.IServices;
 import models.Livro;
 import utils.FileUtils;
 
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class CadastroLivroService implements IGerenciavel {
+public class CadastroLivroService implements IGerenciavel, IServices {
     Scanner scanner = new Scanner(System.in);
 
     public static void alugarLivro(String titulo, short ano) /*throws Excpetion Se tiver true*/ {
@@ -24,20 +25,24 @@ public class CadastroLivroService implements IGerenciavel {
 
     @Override
     public void adicionar() {
-        System.out.println("===Cadastro de Livros===\n");
-        System.out.println("Nome do Livro");
-        String titulo = scanner.nextLine();
+        try {
+            System.out.println("===Cadastro de Livros===\n");
+            System.out.println("Nome do Livro");
+            String titulo = scanner.nextLine();
 
-        System.out.println("Nome do Autor");
-        String autor = scanner.nextLine();
+            System.out.println("Nome do Autor");
+            String autor = scanner.nextLine();
 
-        System.out.println("Ano de Edição do Livro");
-        short ano = scanner.nextShort();
-        scanner.nextLine();
-        Livro book = new Livro(titulo,autor,ano, false);
+            System.out.println("Ano de Edição do Livro");
+            short ano = scanner.nextShort();
+            scanner.nextLine();
+            Livro book = new Livro(titulo, autor, ano, false);
 
-        FileUtils.salvarNoArquivo(book);
-        System.out.println("Livro adicionado com sucesso.");
+            FileUtils.salvarNoArquivo(book);
+            System.out.println("Livro adicionado com sucesso.");
+        } catch (Exception e) {
+            System.err.println("Erro ao adicionar livro: " + e.getMessage());
+        }
     }
 
     @Override
