@@ -1,3 +1,8 @@
+## Qual finalidade?
+
+> Esta atividade tinha por objetivo demonstrar todos conhecimentos adquiridos na aulas de Programação Orientada a Objetos, visando criar um sistema de sua escolha, que na minha foi uma Biblioteca, em que teriamos dois tipos de usuários no caso os Funcionários que seriam o administrador e o cliente que seria a pessoa que aluga.
+
+
 ## Classes Abstratas
 
 - ItemBiblioteca
