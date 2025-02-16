@@ -1,6 +1,6 @@
 ## Qual finalidade?
 
-> Esta atividade tinha por objetivo demonstrar todos os conhecimentos adquiridos nas aulas de **Programação Orientada a Objetos**, visando criar um sistema de sua escolha, que na minha foi uma Biblioteca, em que teríamos dois tipos de usuários no caso os funcionários que seriam os administradores do sistema e os clientes que seriam as pessoas que alugam os livros.
+> Esta atividade tinha por objetivo demonstrar todos os conhecimentos adquiridos nas aulas de **Programação Orientada a Objetos**, visando criar um sistema de sua escolha, que na minha foi uma Biblioteca, em que teríamos dois tipos de usuários no caso os funcionários que seriam os administradores do sistema e os clientes que seriam as pessoas que alugam os livros. Tudo isso usando a linguagem JAVA.
 
 
 ## Classes Abstratas
